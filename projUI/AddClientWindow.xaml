@@ -1,0 +1,43 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:projUI"
+        xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.AddClientWindow"
+        mc:Ignorable="d"
+        Title="AddClientWindow" Height="631.904" Width="737.983">
+    <Window.DataContext>
+        <ViewModels:AddWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Label x:Name="label" Content="Номер замовлення:" Margin="156,48,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <Label x:Name="lblId" Content="{Binding lblId}" Margin="308,48,386,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label x:Name="label1" Content="І'мя клієнта:" Margin="200,91,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtName" Height="23" Margin="294,91,204,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" MaxLines="1" Text="{Binding txtName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <Label x:Name="label2" Content="Номер телефону:" Margin="170,138,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtPhoneNumber" Height="23" Margin="294,138,204,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" MaxLines="1" Text="{Binding txtPhoneNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <Label x:Name="label3" Content="Пристрій:" Margin="212,188,428,0" VerticalAlignment="Top" Width="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtModel" Height="23" Margin="294,188,204,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" MaxLines="1" Text="{Binding txtModel, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <Label x:Name="label3_Copy" Content="Проблема:" Margin="206,242,428,0" VerticalAlignment="Top" Width="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtProblem" Margin="294,239,204,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="53" MaxLines="4" Text="{Binding txtProblem, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left"/>
+        <ComboBox x:Name="cbMasters" Margin="294,321,290,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding cbMasters}" SelectedItem="{Binding cbSelectedmaster}" HorizontalAlignment="Left"/>
+        <Label x:Name="label3_Copy1" Content="Майстер:" Margin="216,324,428,0" VerticalAlignment="Top" Width="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <Label x:Name="label3_Copy2" Content="Загальна вартість:" Margin="168,386,428,0" VerticalAlignment="Top" Width="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtCost" Height="23" Margin="294,386,290,0" Width="120" MaxLines="1" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" VerticalScrollBarVisibility="Disabled" Text="{Binding txtCost, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <Label x:Name="label3_Copy3" Content="Прибуток:" Margin="206,446,428,0" VerticalAlignment="Top" Width="70" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtIncome" Height="23" Margin="294,449,290,0" Width="120" MaxLines="1" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" VerticalScrollBarVisibility="Disabled" Text="{Binding txtIncome, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <DatePicker Margin="294,502,290,0" VerticalAlignment="Top" Width="120" FirstDayOfWeek="Monday" SelectedDate="{Binding dpReceptionDateSet }" HorizontalAlignment="Left"/>
+        <Label x:Name="label3_Copy4" Content="Дата прийому:" Margin="184,500,428,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
+        <Button x:Name="btAdd" Content="Додати" HorizontalAlignment="Center" Margin="270,0,212,23" VerticalAlignment="Bottom" Width="75" Command="{Binding btnAdd, Mode=OneWay}"/>
+        <Label x:Name="nameErorrMsg" Content="Від 4 до 25 символів" HorizontalAlignment="Left" Margin="526,91,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding NameErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="phoneErorrMsg" Content="+{Код країни}xxxxxxxxx" HorizontalAlignment="Left" Margin="526,138,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding phoneErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="modelErorrMsg" Content="!" HorizontalAlignment="Left" Margin="526,185,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding modelErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="problemErorrMsg" Content="!" HorizontalAlignment="Left" Margin="526,242,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding problemErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="costErorrMsg" Content="!" HorizontalAlignment="Left" Margin="526,383,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding costErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="incomeErorrMsg" Content="!" HorizontalAlignment="Left" Margin="526,449,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding incomeErorrMsg, Mode=OneWay}"/>
+        <Label x:Name="incomeErorrMsg_Copy" Content="Не обов'язково" HorizontalAlignment="Left" Margin="425,449,0,0" VerticalAlignment="Top" Foreground="#FF57EC11" HorizontalContentAlignment="Stretch"/>
+        <Label x:Name="recDateErorrMsg" Content="Не коректна дата" HorizontalAlignment="Left" Margin="526,502,0,0" VerticalAlignment="Top" Foreground="#FFEC1111" HorizontalContentAlignment="Stretch" Visibility="{Binding recDateErorrMsg, Mode=OneWay}"/>
+
+    </Grid>
+</Window>

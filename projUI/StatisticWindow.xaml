@@ -1,0 +1,29 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:projUI"
+        xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.StatisticWindow"
+        mc:Ignorable="d"
+        Title="StatisticWindow" Height="316.854" Width="433.146">
+    <Window.DataContext>
+        <ViewModels:StatisticWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="199,25,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding cbUsers}" Text="{Binding cbSelected, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label" Content="Виберіть майстра" HorizontalAlignment="Left" Margin="72,25,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Margin="76,81,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" SelectedDate="{Binding fromDate}"/>
+        <DatePicker HorizontalAlignment="Left" Margin="284,81,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" SelectedDate="{Binding toDate}"/>
+        <Label x:Name="label1" Content="Від" HorizontalAlignment="Left" Margin="33,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="До" HorizontalAlignment="Left" Margin="246,79,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label3" Content="К-сть виконаних замовлень:" HorizontalAlignment="Left" Margin="72,136,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDoneOrders" Content="{Binding lblDoneOrders, Mode=OneWay}" HorizontalAlignment="Left" Margin="284,136,0,0" VerticalAlignment="Top" Height="26"/>
+        <Label x:Name="label4" Content="Отримані кошти:" HorizontalAlignment="Left" Margin="76,181,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label5" Content="Прибуток:" HorizontalAlignment="Left" Margin="76,226,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblTotalCost" Content="{Binding lblTotalCost, Mode=OneWay}" HorizontalAlignment="Left" Margin="284,181,0,0" VerticalAlignment="Top" Height="26"/>
+        <Label x:Name="lblIncome" Content="{Binding lblIncome, Mode=OneWay}" HorizontalAlignment="Left" Margin="284,226,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblInValid" Content="Вибрані значення дати не є коректними" HorizontalAlignment="Left" Margin="104,110,0,0" VerticalAlignment="Top" Height="26" Foreground="#FFF00E0E" Visibility="{Binding ErrorLblVisibility, Mode=OneWay}"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:projUI"
+        xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="318" Width="495" ResizeMode="NoResize">
+
+    <Grid>
+
+        <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Height="22" Margin="194,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding txtLogin, UpdateSourceTrigger=LostFocus}" Cursor="Pen" TabIndex="1" />
+        <Label x:Name="label" Content="Login" HorizontalAlignment="Left" Margin="136,71,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Password" HorizontalAlignment="Left" Margin="114,121,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btLogin" Content="Увійти" HorizontalAlignment="Left" Margin="206,175,0,0" VerticalAlignment="Top" Width="76" Command="{Binding btnClick, Mode=Default}" TabIndex="3" Cursor="Hand">
+
+        </Button>
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Height="22" Margin="194,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding txtPassword}" ToolTip="Password" Cursor="Pen" TabIndex="2" MaxLines="1" MinLines="1"/>
+        <Button x:Name="btRegistrationWin" Content="Реєстрація" HorizontalAlignment="Left" Margin="206,224,0,0" VerticalAlignment="Top" Width="75" Height="25" Command="{Binding regBtnClick}" Cursor="Hand"/>
+
+    </Grid>
+</Window>

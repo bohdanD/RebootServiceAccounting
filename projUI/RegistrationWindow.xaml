@@ -1,0 +1,24 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:projUI"
+        xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.RegistrationWindow"
+        mc:Ignorable="d"
+        Title="RegistrationWindow" Height="379.213" Width="542.943">
+    <Grid>
+        <Grid.DataContext>
+            <ViewModels:RegistrationWindowViewModel/>
+        </Grid.DataContext>
+        <TextBox x:Name="txtRegName" HorizontalAlignment="Left" Height="23" Margin="200,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding txtLogin}" BorderBrush="{Binding loginBrush, Mode=OneWay}"/>
+        <TextBox x:Name="txtRegPass" HorizontalAlignment="Left" Height="23" Margin="200,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding txtPassword, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding passwordBrush, Mode=OneWay}"/>
+        <CheckBox x:Name="chkAdmin" Content="Надати права адміна?" HorizontalAlignment="Left" Margin="200,191,0,0" VerticalAlignment="Top" IsChecked="{Binding isAdmin}"/>
+        <Label x:Name="label" Content="Ім'я(Login)" HorizontalAlignment="Left" Margin="115,65,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.564,-0.663"/>
+        <Label x:Name="label1" Content="Пароль" HorizontalAlignment="Left" Margin="131,124,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btRegConfirm" Content="Зареєструвати" HorizontalAlignment="Left" Margin="180,248,0,0" VerticalAlignment="Top" Width="94" Height="33" Command="{Binding regConfirmCommand, Mode=Default}"/>
+        <Label x:Name="lblErrorNameMsg" Content="a-z малі літери(1-20 знаків)" HorizontalAlignment="Left" Margin="333,65,0,0" VerticalAlignment="Top" Foreground="#FFEE1515" Visibility="{Binding ErorrNameMsg, Mode=OneWay}"/>
+        <Label x:Name="lblErrorPasswordMsg" Content="a-z або 0-9 (4-8 знаків)" HorizontalAlignment="Left" Margin="333,124,0,0" VerticalAlignment="Top" Foreground="#FFEE1515" Visibility="{Binding ErorrPasswordMsg, Mode=OneWay}"/>
+
+    </Grid>
+</Window>
