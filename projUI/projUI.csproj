@@ -92,6 +92,7 @@
     <Compile Include="Commands\OpenClientsWindowCommand.cs" />
     <Compile Include="Commands\RegistrationButtonCommand.cs" />
     <Compile Include="Commands\RegistrationConfirmButtonCommand.cs" />
+    <Compile Include="Commands\SaveChangesButtonCommand.cs" />
     <Compile Include="Commands\StatisticButtonCommand.cs" />
     <Compile Include="Constants\GlobalData.cs" />
     <Compile Include="MainWindow.xaml.cs">

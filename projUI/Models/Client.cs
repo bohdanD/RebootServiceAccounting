@@ -28,7 +28,20 @@ namespace projUI.Models
 
         public virtual User Master { get; set; }
         private DataContext db;
-        
+        public override bool Equals(object obj)
+        {
+            var arg = obj as Client;
+            if (arg == null) return false;
+            bool result = this.Id == arg.Id
+                && this.Name == arg.Name
+                && this.MasterName == arg.MasterName
+                && this.Income == arg.Income
+                && this.ReceptionDate == arg.ReceptionDate
+                && this.GivingDate.Equals(arg.GivingDate)
+                && this.Problem == arg.Problem
+                && this.IsDone == arg.IsDone;
+            return result;
+        }
         public Client()
         {
             this.IsDone = false;
@@ -52,6 +65,10 @@ namespace projUI.Models
             
         }
 
+        public Client GetClientById(int Id)
+        {
+           return db.Clients.Where(i => i.Id == Id).AsEnumerable().First();
+        }
         public int GetDoneOrdersCount(User user)
         {
             return GetDoneOrders(user).Count();
@@ -87,6 +104,8 @@ namespace projUI.Models
             return currentClients;
         }
 
+        
+
         public List<Client> GetSearchedFromDB(string searchString)
         {
             return db.Clients.Where(i => i.Id.ToString().Contains(searchString)
@@ -111,7 +130,7 @@ namespace projUI.Models
 
         public int GetNextClientId()
         {
-            return db.Clients.Select(i => i.Id).Max() + 1;
+            return db.Clients != null ? db.Clients.Select(i => i.Id).Max() + 1 : 10001;
         }
 
         public bool IsNameValid()
@@ -163,6 +182,17 @@ namespace projUI.Models
             db.Clients.Add(this);
             db.SaveChanges();
             Debug.WriteLine("succes");
+        }
+
+        public void UpdClient(Client client)
+        {
+            var old = db.Clients.Where(i => i.Id == client.Id).ToArray()[0];
+            old.MasterName = client.MasterName;
+            old.Problem = client.Problem;
+            old.Income = client.Income;
+            old.GivingDate = client.GivingDate.Value;
+            old.IsDone = client.IsDone;
+            db.SaveChanges();
         }
         
     }

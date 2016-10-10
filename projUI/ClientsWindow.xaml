@@ -6,28 +6,28 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.ClientsWindow"
         mc:Ignorable="d"
-        Title="ClientsWindow" Height="436.517" Width="719.663">
+        Title="ClientsWindow" Height="436.517" Width="875.663">
     <Window.DataContext>
         <ViewModels:ClientsWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Label x:Name="label" Content="Швидкий пошук:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="107"/>
         <Label x:Name="label_Copy" Content="Пошук за номером:" HorizontalAlignment="Left" Margin="306,10,0,0" VerticalAlignment="Top" Width="122"/>
-        <TextBox x:Name="txtQuickSearch" HorizontalAlignment="Left" Height="23" Margin="137,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding txtQuickSearch, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="txtQuickSearch" HorizontalAlignment="Left" Height="23" Margin="137,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding quickSearch, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="txtIdSearch" HorizontalAlignment="Left" Height="23" Margin="450,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="button" Content="Знайти" HorizontalAlignment="Left" Margin="601,14,0,0" VerticalAlignment="Top" Width="82" Height="22"/>
         <CheckBox x:Name="cbActiveOnly" Content="Лише активні замовлення" HorizontalAlignment="Left" Margin="28,57,0,0" VerticalAlignment="Top" Height="19" Width="175" IsChecked="{Binding cbIsCurrentUserOnly}"/>
         <CheckBox x:Name="cbCurrentUserOnly" Content="Лише замовлення поточного користувача" HorizontalAlignment="Left" Margin="306,57,0,0" VerticalAlignment="Top" Height="19" Width="264" IsChecked="{Binding cbIsActiveOnly}"/>
-        <DataGrid x:Name="dataGridClients" Grid.Row="1" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Height="303" Width="692" ItemsSource="{Binding clients}" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGridClients" Margin="10,93,0,0" ItemsSource="{Binding Clients, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AutoGenerateColumns="False" ClipToBounds="True" VerticalContentAlignment="Stretch" VerticalAlignment="Top" EnableRowVirtualization="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Номер замовлення" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Номер телефону" Binding="{Binding PhoneNumber}"/>
-                <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
-                <DataGridTextColumn Header="Проблема" Binding="{Binding Problem}"/>
+                <DataGridTextColumn Header="Номер замовлення" Binding="{Binding Id}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Номер телефону" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Модель" Binding="{Binding Model}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Проблема" Binding="{Binding Problem, Mode=TwoWay}" MaxWidth="150"/>
                 <DataGridTextColumn Header="Загальна вартість" Binding="{Binding Cost}"/>
                 <DataGridTextColumn Header="Дохід" Binding="{Binding Income}"/>
-                <DataGridTemplateColumn Header="Дата прийому">
+                <DataGridTemplateColumn Header="Дата прийому" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
                             <DatePicker  SelectedDate="{Binding ReceptionDate}" />
@@ -37,13 +37,14 @@
                 <DataGridTemplateColumn Header="Дата видачі">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <DatePicker  SelectedDate="{Binding GivngDate}" />
+                            <DatePicker  SelectedDate="{Binding GivingDate, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Майстер" Binding="{Binding MasterName}"/>
-                <DataGridTextColumn Header="Зроблено?" Binding="{Binding IsDone}"/>
+                <DataGridCheckBoxColumn Header="Зроблено?" Binding="{Binding IsDone}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button x:Name="saveChangesbtn" Content="Зберегти зміни" HorizontalAlignment="Left" Margin="732,22,0,0" VerticalAlignment="Top" Width="100" Height="54" FontStyle="Oblique" FontWeight="Bold" Command="{Binding SaveChangesCommand}"/>
     </Grid>
 </Window>
