@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace projUI.ViewModels
 {
@@ -53,17 +54,37 @@ namespace projUI.ViewModels
         
         private void SaveChanges()
         {
-            var Changed = Clients.OfType<Client>();
-            foreach (var item in Changed)
+            var items = Clients.OfType<Client>();
+            var Ids = items.Select(i => i.Id).ToArray();
+            var dbItems = items.First().GetClientsByIds(Ids);
+            int index = 0;
+            string infoMsg = "Зміни успішно внесено до замовлень(ня) під номером:";
+            foreach (var item in items)
             {
-                var temp = item.GetClientById(item.Id);
-                Debug.WriteLine($"date = {item.GivingDate.ToString()}");
-                if (!item.Equals(temp))
+                if (!item.Equals(dbItems[index]))
                 {
-                    Debug.WriteLine($"id = {item.Id}");
-                    temp.UpdClient(item);
+                    if(item.IsDone == true)
+                    {
+                        string erorrMsg = $"Проблеми зі збереженням замовлення під номером {item.Id}. Перевірте поля:\n";
+                        if (item.GivingDate.Equals(null))
+                            item.GivingDate = DateTime.Today;
+                        if (item.Income==null || item.Income.Value == 0)
+                        {
+                            erorrMsg += "Прибуток\n";
+                            MessageBox.Show(erorrMsg, "Помилка збереження", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        }
+                         
+                    }
+                    item.UpdClient(item);
+                    infoMsg += $" {item.Id},";
                 }
+                index ++;
             }
+            infoMsg.Remove(infoMsg.LastIndexOf(','));
+            MessageBox.Show(infoMsg, "Зміни збережено", MessageBoxButton.OK, MessageBoxImage.Information);
+            Clients.Refresh();
+            
         }
   
         public bool Filter(object obj)
@@ -184,19 +205,14 @@ namespace projUI.ViewModels
             DependencyProperty.Register("Clients", typeof(ICollectionView), typeof(DataGrid),
                 new PropertyMetadata(null));
 
+      
 
-    //    private static bool ValidateValue(object value)
-    //    {
-            
-    //        return true;
-    //    }
-
-    //    private static void OnProblemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    //    {
-    //        Debug.Write("funcking shit ;sfdlankl");
-    //        var grid = d as DataGrid;
-    //        var item = grid.CurrentCell.Item as Client;
-    //        item.UpdClient(item);
-    //    }
+        //    private static void OnProblemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //    {
+        //        Debug.Write("funcking shit ;sfdlankl");
+        //        var grid = d as DataGrid;
+        //        var item = grid.CurrentCell.Item as Client;
+        //        item.UpdClient(item);
+        //    }
     }
 }

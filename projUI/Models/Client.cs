@@ -35,8 +35,9 @@ namespace projUI.Models
             bool result = this.Id == arg.Id
                 && this.Name == arg.Name
                 && this.MasterName == arg.MasterName
+                && this.Cost == arg.Cost
                 && this.Income == arg.Income
-                && this.ReceptionDate == arg.ReceptionDate
+                && this.ReceptionDate.Equals(arg.ReceptionDate)
                 && this.GivingDate.Equals(arg.GivingDate)
                 && this.Problem == arg.Problem
                 && this.IsDone == arg.IsDone;
@@ -65,9 +66,9 @@ namespace projUI.Models
             
         }
 
-        public Client GetClientById(int Id)
+        public List<Client> GetClientsByIds(int[] Id)
         {
-           return db.Clients.Where(i => i.Id == Id).AsEnumerable().First();
+           return db.Clients.Where(i => Id.Contains(i.Id)).AsEnumerable().ToList();
         }
         public int GetDoneOrdersCount(User user)
         {
@@ -189,8 +190,9 @@ namespace projUI.Models
             var old = db.Clients.Where(i => i.Id == client.Id).ToArray()[0];
             old.MasterName = client.MasterName;
             old.Problem = client.Problem;
+            old.Cost = client.Cost;
             old.Income = client.Income;
-            old.GivingDate = client.GivingDate.Value;
+            old.GivingDate = client.GivingDate;
             old.IsDone = client.IsDone;
             db.SaveChanges();
         }

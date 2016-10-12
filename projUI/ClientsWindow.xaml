@@ -19,6 +19,18 @@
         <CheckBox x:Name="cbActiveOnly" Content="Лише активні замовлення" HorizontalAlignment="Left" Margin="28,57,0,0" VerticalAlignment="Top" Height="19" Width="175" IsChecked="{Binding cbIsCurrentUserOnly}"/>
         <CheckBox x:Name="cbCurrentUserOnly" Content="Лише замовлення поточного користувача" HorizontalAlignment="Left" Margin="306,57,0,0" VerticalAlignment="Top" Height="19" Width="264" IsChecked="{Binding cbIsActiveOnly}"/>
         <DataGrid x:Name="dataGridClients" Margin="10,93,0,0" ItemsSource="{Binding Clients, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AutoGenerateColumns="False" ClipToBounds="True" VerticalContentAlignment="Stretch" VerticalAlignment="Top" EnableRowVirtualization="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDone}" Value="True">
+                            <Setter Property="Background" Value="#7de307"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsDone}" Value="False">
+                            <Setter Property="Background" Value="#f95d55"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер замовлення" Binding="{Binding Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" IsReadOnly="True"/>
