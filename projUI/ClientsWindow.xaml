@@ -11,22 +11,21 @@
         <ViewModels:ClientsWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Label x:Name="label" Content="Швидкий пошук:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="107"/>
-        <Label x:Name="label_Copy" Content="Пошук за номером:" HorizontalAlignment="Left" Margin="306,10,0,0" VerticalAlignment="Top" Width="122"/>
-        <TextBox x:Name="txtQuickSearch" HorizontalAlignment="Left" Height="23" Margin="137,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding quickSearch, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="txtIdSearch" HorizontalAlignment="Left" Height="23" Margin="450,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button" Content="Знайти" HorizontalAlignment="Left" Margin="601,14,0,0" VerticalAlignment="Top" Width="82" Height="22"/>
-        <CheckBox x:Name="cbActiveOnly" Content="Лише активні замовлення" HorizontalAlignment="Left" Margin="28,57,0,0" VerticalAlignment="Top" Height="19" Width="175" IsChecked="{Binding cbIsCurrentUserOnly}"/>
-        <CheckBox x:Name="cbCurrentUserOnly" Content="Лише замовлення поточного користувача" HorizontalAlignment="Left" Margin="306,57,0,0" VerticalAlignment="Top" Height="19" Width="264" IsChecked="{Binding cbIsActiveOnly}"/>
-        <DataGrid x:Name="dataGridClients" Margin="10,93,0,0" ItemsSource="{Binding Clients, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AutoGenerateColumns="False" ClipToBounds="True" VerticalContentAlignment="Stretch" VerticalAlignment="Top" EnableRowVirtualization="False">
+        <Label x:Name="label" Content="Швидкий пошук:" Margin="10,10,0,0" VerticalAlignment="Top" Width="107" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <Label x:Name="label_Copy" Content="Пошук за номером:" Margin="479,11,0,0" VerticalAlignment="Top" Width="122" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtQuickSearch" Height="23" Margin="137,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding quickSearch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtIdSearch" Height="23" Margin="606,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
+        <Button x:Name="button" Content="Знайти" Margin="757,14,0,0" VerticalAlignment="Top" Width="82" Height="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <CheckBox x:Name="cbActiveOnly" Content="Лише активні замовлення" Margin="282,16,0,0" VerticalAlignment="Top" Height="19" Width="175" IsChecked="{Binding IsActiveOnly}" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <DataGrid x:Name="dataGridClients" Margin="10,91,0,0" ItemsSource="{Binding Clients, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AutoGenerateColumns="False" ClipToBounds="True" VerticalContentAlignment="Stretch" VerticalAlignment="Top" EnableRowVirtualization="False" Background="{x:Null}" FontWeight="SemiBold">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsDone}" Value="True">
-                            <Setter Property="Background" Value="#7de307"></Setter>
+                            <Setter Property="Background" Value="#cbf6ca"></Setter>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsDone}" Value="False">
-                            <Setter Property="Background" Value="#f95d55"></Setter>
+                            <Setter Property="Background" Value="#f6ccca"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -57,6 +56,6 @@
                 <DataGridCheckBoxColumn Header="Зроблено?" Binding="{Binding IsDone}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="saveChangesbtn" Content="Зберегти зміни" HorizontalAlignment="Left" Margin="732,22,0,0" VerticalAlignment="Top" Width="100" Height="54" FontStyle="Oblique" FontWeight="Bold" Command="{Binding SaveChangesCommand}"/>
+        <Button x:Name="saveChangesbtn" Content="Зберегти зміни" HorizontalAlignment="Left" Margin="17,45,0,0" VerticalAlignment="Top" Width="100" Height="32" FontStyle="Oblique" FontWeight="Bold" Command="{Binding SaveChangesCommand}"/>
     </Grid>
 </Window>

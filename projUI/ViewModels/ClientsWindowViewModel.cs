@@ -43,46 +43,48 @@ namespace projUI.ViewModels
 
            // quickSearchRequest = "";
             globalSearchRequest = "";
-            isActive = true;
+            isActive = false;
             isCurrentUser = false;
             _client = new Client();
             GlobalData.LastClients = _client.GetLastClients(20);
             Clients = CollectionViewSource.GetDefaultView(GlobalData.LastClients);
             Clients.Filter = Filter;
-          
         }
         
         private void SaveChanges()
         {
             var items = Clients.OfType<Client>();
             var Ids = items.Select(i => i.Id).ToArray();
-            var dbItems = items.First().GetClientsByIds(Ids);
+            var dbItems = _client.GetClientsByIds(Ids);
             int index = 0;
             string infoMsg = "Зміни успішно внесено до замовлень(ня) під номером:";
+            bool show = false;
             foreach (var item in items)
             {
                 if (!item.Equals(dbItems[index]))
                 {
-                    if(item.IsDone == true)
+                    show = true;
+                    string erorrMsg = $"Проблеми зі збереженням замовлення під номером {item.Id}. Перевірте поля:\n";
+                    if (item.IsDone == true)
                     {
-                        string erorrMsg = $"Проблеми зі збереженням замовлення під номером {item.Id}. Перевірте поля:\n";
+                        
                         if (item.GivingDate.Equals(null))
                             item.GivingDate = DateTime.Today;
                         if (item.Income==null || item.Income.Value == 0)
                         {
                             erorrMsg += "Прибуток\n";
                             MessageBox.Show(erorrMsg, "Помилка збереження", MessageBoxButton.OK, MessageBoxImage.Error);
-                            break;
+                            return;
                         }
                          
                     }
-                    item.UpdClient(item);
+                    _client.UpdClient(item);
                     infoMsg += $" {item.Id},";
                 }
                 index ++;
             }
-            infoMsg.Remove(infoMsg.LastIndexOf(','));
-            MessageBox.Show(infoMsg, "Зміни збережено", MessageBoxButton.OK, MessageBoxImage.Information);
+            if(show)
+                MessageBox.Show(infoMsg, "Зміни збережено", MessageBoxButton.OK, MessageBoxImage.Information);
             Clients.Refresh();
             
         }
@@ -98,81 +100,20 @@ namespace projUI.ViewModels
                 || i.PhoneNumber.Contains(searchString)
                 || i.Model.ToLower().Contains(searchString)
                 || i.MasterName.Contains(searchString.ToLower());
-            return result;
+            return isActive ? result && isActive != i.IsDone : result;
         }
 
         public ICommand SaveChangesCommand { get { return btnSave; } }
-        #region commented
-        //public string txtQuickSearch
-        //{
-        //    get
-        //    {
-        //        return quickSearchRequest;
-        //    }
-        //    set
-        //    {
-        //        quickSearchRequest = value;
-        //        OnProrertyChanged("Clients");
-        //    }
-        //}
-        //public string txtGlobalSearch
-        //{
-        //    get
-        //    {
-        //        return globalSearchRequest;
-        //    }
-        //    set
-        //    {
-        //        globalSearchRequest = value;
-        //    }
-        //}
-
-        //public bool cbIsActiveOnly
-        //{
-        //    get
-        //    {
-        //        return isActive;
-        //    }
-        //    set
-        //    {
-        //        isActive = value;
-        //        OnProrertyChanged("clients");
-        //    }
-        //}
-        //public bool cbIsCurrentUserOnly
-        //{
-        //    get
-        //    {
-        //        return isCurrentUser;
-        //    }
-        //    set
-        //    {
-        //        isCurrentUser = value;
-        //        OnProrertyChanged("clients");
-        //    }
-        //}
-
-        //public IEnumerable<Client> clients
-        //{
-        //    get
-        //    {
-        //        return _client.GetSearchedFromLastClients(quickSearchRequest, isCurrentUser, isActive);
-        //    }   
-        //}
-
-        //public IEnumerable<string> txtProblem
-        //{
-        //    get
-        //    {
-        //        return clients.Select(i => i.Problem);
-        //    }
-        //    set
-        //    {
-        //        DataGrid.SelectedItemProperty
-        //    }
-        //}
-        #endregion
-
+        
+        public bool IsActiveOnly
+        {
+            set
+            {
+                isActive = value;
+                OnQuickSearchChanged(this, new DependencyPropertyChangedEventArgs());
+            }
+            get { return isActive; }
+        }
 
         public string quickSearch
         {
@@ -205,14 +146,6 @@ namespace projUI.ViewModels
             DependencyProperty.Register("Clients", typeof(ICollectionView), typeof(DataGrid),
                 new PropertyMetadata(null));
 
-      
-
-        //    private static void OnProblemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //    {
-        //        Debug.Write("funcking shit ;sfdlankl");
-        //        var grid = d as DataGrid;
-        //        var item = grid.CurrentCell.Item as Client;
-        //        item.UpdClient(item);
-        //    }
+     
     }
 }

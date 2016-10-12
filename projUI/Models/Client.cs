@@ -27,7 +27,7 @@ namespace projUI.Models
         public bool IsDone { get; set; }
 
         public virtual User Master { get; set; }
-        private DataContext db;
+        //private DataContext db;
         public override bool Equals(object obj)
         {
             var arg = obj as Client;
@@ -46,92 +46,86 @@ namespace projUI.Models
         public Client()
         {
             this.IsDone = false;
-            db = new DataContext();
         }
 
         public List<Client> GetLastClients(int clientsCount)
         {
-            int maxId = db.Clients.Select(i => i.Id).Max();
-            return db.Clients.Where(i => (maxId - i.Id) <= clientsCount).ToList();
+            using (DataContext db = new DataContext())
+            {
+                int maxId = db.Clients.Select(i => i.Id).Max();
+                return db.Clients.Where(i => (maxId - i.Id) <= clientsCount).ToList();
+            }
+            
         }
         /// <summary>
         /// Gets done orders for a current month.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private IQueryable<Client> GetDoneOrders(User user)
+        private IQueryable<Client> GetDoneOrders(User user, DataContext innerdb)
         {
-            return db.Clients.Where(i => i.MasterName.Equals(user.Name) && i.IsDone
+            return innerdb.Clients.Where(i => i.MasterName.Equals(user.Name) && i.IsDone
             && (DateTime.Today.Month == i.GivingDate.Value.Month));
             
         }
 
         public List<Client> GetClientsByIds(int[] Id)
         {
-           return db.Clients.Where(i => Id.Contains(i.Id)).AsEnumerable().ToList();
+            using (DataContext db = new DataContext())
+                return db.Clients.Where(i => Id.Contains(i.Id)).AsEnumerable().ToList();
         }
         public int GetDoneOrdersCount(User user)
         {
-            return GetDoneOrders(user).Count();
+            using (DataContext db = new DataContext())
+                return GetDoneOrders(user, db).Count();
         }
 
-        private IQueryable<Client> GetDoneOrdersForTime(User user, DateTime from, DateTime to)
+        private IQueryable<Client> GetDoneOrdersForTime(User user, DateTime from, DateTime to, DataContext innerdb)
         {
-            return db.Clients.Where(i => i.MasterName.Equals(user.Name) && i.IsDone
-                && ((DateTime.Compare(from, i.GivingDate.Value) < 0 || DateTime.Compare(from, i.GivingDate.Value) == 0)
-                && (DateTime.Compare(to, i.GivingDate.Value) > 0 || DateTime.Compare(to, i.GivingDate.Value) == 0)));
+                return innerdb.Clients.Where(i => i.MasterName.Equals(user.Name) && i.IsDone
+                    && ((DateTime.Compare(from, i.GivingDate.Value) < 0 || DateTime.Compare(from, i.GivingDate.Value) == 0)
+                    && (DateTime.Compare(to, i.GivingDate.Value) > 0 || DateTime.Compare(to, i.GivingDate.Value) == 0)));
 
         }
 
         public int GetOrdersCountForTime(User user, DateTime from, DateTime to)
         {
-            return GetDoneOrdersForTime(user, from, to).Count();
-        }
-        
-
-        public List<Client> GetSearchedFromLastClients(string searchString, bool isUserOnly, bool isActiveOnly)
-        {
-            var currentClients = GlobalData.LastClients;
-            if (searchString != null && searchString != "")
-                currentClients = currentClients.Where(i => i.Id.ToString().Contains(searchString)
-                || i.Name.ToLower().Contains(searchString.ToLower())
-                || i.PhoneNumber.Contains(searchString)
-                || i.Model.ToLower().Contains(searchString)
-                || i.MasterName.Contains(searchString.ToLower())).ToList();
-            if (isUserOnly)
-                currentClients = currentClients.Where(i => i.MasterName.Equals(GlobalData.CurrentUser.Name)).ToList();
-            if (isActiveOnly)
-                currentClients = currentClients.Where(i => i.IsDone != true).ToList();
-            return currentClients;
+            using (DataContext db = new DataContext())
+                return GetDoneOrdersForTime(user, from, to, db).Count();
         }
 
         
 
         public List<Client> GetSearchedFromDB(string searchString)
         {
-            return db.Clients.Where(i => i.Id.ToString().Contains(searchString)
-            || i.Name.ToLower().Contains(searchString.ToLower())
-            || i.PhoneNumber.Contains(searchString)).ToList();
+            using (DataContext db = new DataContext())
+                return db.Clients.Where(i => i.Id.ToString().Contains(searchString)
+                || i.Name.ToLower().Contains(searchString.ToLower())
+                || i.PhoneNumber.Contains(searchString)).ToList();
         }
 
         public int GetIncome(User user)
         {
-            return GetDoneOrders(user).ToList().Sum(i => i.Income.Value);
+            using (DataContext db = new DataContext())
+                return GetDoneOrders(user, db).ToList().Sum(i => i.Income.Value);
         }
 
         public int GetCostsForTime(User user, DateTime from, DateTime to)
         {
-            return GetDoneOrdersForTime(user, from, to).AsEnumerable().Select(i => i.Cost).Sum(); 
+            using (DataContext db = new DataContext())
+                return GetDoneOrdersForTime(user, from, to, db).AsEnumerable().Select(i => i.Cost).Sum(); 
         }
 
         public int GetIncomeForTime(User user, DateTime from, DateTime to)
         {
-            return GetDoneOrdersForTime(user, from, to).AsEnumerable().Select(i => i.Income.Value).Sum();
+            using (DataContext db = new DataContext())
+                return GetDoneOrdersForTime(user, from, to, db).AsEnumerable().Select(i => i.Income.Value).Sum();
         }
 
         public int GetNextClientId()
         {
-            return db.Clients != null ? db.Clients.Select(i => i.Id).Max() + 1 : 10001;
+            using (DataContext db = new DataContext())
+                return db.Clients != null ? db.Clients.Select(i => i.Id).Max() + 1 : 10001;
         }
 
         public bool IsNameValid()
@@ -180,21 +174,27 @@ namespace projUI.Models
         }
         public void AddClient()
         {
-            db.Clients.Add(this);
-            db.SaveChanges();
-            Debug.WriteLine("succes");
+            using (DataContext db = new DataContext())
+            {
+                db.Clients.Add(this);
+                db.SaveChanges();
+            }
+
         }
 
         public void UpdClient(Client client)
         {
-            var old = db.Clients.Where(i => i.Id == client.Id).ToArray()[0];
-            old.MasterName = client.MasterName;
-            old.Problem = client.Problem;
-            old.Cost = client.Cost;
-            old.Income = client.Income;
-            old.GivingDate = client.GivingDate;
-            old.IsDone = client.IsDone;
-            db.SaveChanges();
+            using (DataContext db = new DataContext())
+            {
+                var old = db.Clients.Where(i => i.Id == client.Id).ToArray()[0];
+                old.MasterName = client.MasterName;
+                old.Problem = client.Problem;
+                old.Cost = client.Cost;
+                old.Income = client.Income;
+                old.GivingDate = client.GivingDate;
+                old.IsDone = client.IsDone;
+                db.SaveChanges();
+            }     
         }
         
     }
