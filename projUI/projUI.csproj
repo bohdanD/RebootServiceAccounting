@@ -89,6 +89,7 @@
     <Compile Include="Commands\AddButtonCommand.cs" />
     <Compile Include="Commands\AddWinButtonCommand.cs" />
     <Compile Include="Commands\EnterButtonCommand.cs" />
+    <Compile Include="Commands\GlobalSearchCommand.cs" />
     <Compile Include="Commands\OpenClientsWindowCommand.cs" />
     <Compile Include="Commands\RegistrationButtonCommand.cs" />
     <Compile Include="Commands\RegistrationConfirmButtonCommand.cs" />

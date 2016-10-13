@@ -12,10 +12,10 @@
     </Window.DataContext>
     <Grid>
         <Label x:Name="label" Content="Швидкий пошук:" Margin="10,10,0,0" VerticalAlignment="Top" Width="107" FontWeight="Bold" HorizontalAlignment="Left"/>
-        <Label x:Name="label_Copy" Content="Пошук за номером:" Margin="479,11,0,0" VerticalAlignment="Top" Width="122" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <Label x:Name="label_Copy" Content="Глобальний пошук:" Margin="479,11,0,0" VerticalAlignment="Top" Width="122" FontWeight="Bold" HorizontalAlignment="Left"/>
         <TextBox x:Name="txtQuickSearch" Height="23" Margin="137,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding quickSearch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
-        <TextBox x:Name="txtIdSearch" Height="23" Margin="606,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
-        <Button x:Name="button" Content="Знайти" Margin="757,14,0,0" VerticalAlignment="Top" Width="82" Height="22" FontWeight="Bold" HorizontalAlignment="Left"/>
+        <TextBox x:Name="txtIdSearch" Height="23" Margin="606,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left" Text="{Binding GlobalSearch, UpdateSourceTrigger=LostFocus}"/>
+        <Button x:Name="button" Content="Знайти" Margin="757,14,0,0" VerticalAlignment="Top" Width="82" Height="22" FontWeight="Bold" HorizontalAlignment="Left" Command="{Binding GlobalSearchCommand}"/>
         <CheckBox x:Name="cbActiveOnly" Content="Лише активні замовлення" Margin="282,16,0,0" VerticalAlignment="Top" Height="19" Width="175" IsChecked="{Binding IsActiveOnly}" FontWeight="Bold" HorizontalAlignment="Left"/>
         <DataGrid x:Name="dataGridClients" Margin="10,91,0,0" ItemsSource="{Binding Clients, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AutoGenerateColumns="False" ClipToBounds="True" VerticalContentAlignment="Stretch" VerticalAlignment="Top" EnableRowVirtualization="False" Background="{x:Null}" FontWeight="SemiBold">
             <DataGrid.RowStyle>

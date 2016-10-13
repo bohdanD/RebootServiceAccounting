@@ -23,11 +23,11 @@ namespace projUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private Client _client;
-        private string quickSearchRequest;
         private string globalSearchRequest;
         private bool isActive;
-        private bool isCurrentUser;
         private SaveChangesButtonCommand btnSave;
+        private GlobalSearchCommand btnSearch;
+        private List<Client> MyCollection { get; set; }
         private void OnProrertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -41,14 +41,21 @@ namespace projUI.ViewModels
             btnSave = new SaveChangesButtonCommand(()=> { return true; }, SaveChanges);
             //-----
 
-           // quickSearchRequest = "";
+            btnSearch = new GlobalSearchCommand(() => { return true; }, GlobalSearching);
+
+
             globalSearchRequest = "";
             isActive = false;
-            isCurrentUser = false;
             _client = new Client();
+
+            myCollectionViewSource = new CollectionViewSource();
             GlobalData.LastClients = _client.GetLastClients(20);
-            Clients = CollectionViewSource.GetDefaultView(GlobalData.LastClients);
+            myCollectionViewSource.Source = GlobalData.LastClients;
+           
+           
+            Clients = myCollectionViewSource.View;
             Clients.Filter = Filter;
+            
         }
         
         private void SaveChanges()
@@ -83,12 +90,31 @@ namespace projUI.ViewModels
                 }
                 index ++;
             }
-            if(show)
+            if (show)
+            {
                 MessageBox.Show(infoMsg, "Зміни збережено", MessageBoxButton.OK, MessageBoxImage.Information);
-            Clients.Refresh();
-            
+                Clients.Refresh();
+            }
         }
-  
+        public CollectionViewSource myCollectionViewSource;
+        private void GlobalSearching()
+        {
+            if (globalSearchRequest == "")
+                return;
+            List<Client> searched = _client.GetSearchedFromDB(globalSearchRequest);
+            if (searched == null || searched.Count == 0)
+            {
+                MessageBox.Show("Нажаль, замовлення не знайдено, перевірте пошуковий запит.", "Не знайдено",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            myCollectionViewSource.Source = searched;
+            Clients = myCollectionViewSource.View;
+            Clients.Filter = Filter;
+            OnProrertyChanged("Clients");
+
+        }
+
         public bool Filter(object obj)
         {
             bool result = true;
@@ -104,6 +130,7 @@ namespace projUI.ViewModels
         }
 
         public ICommand SaveChangesCommand { get { return btnSave; } }
+        public ICommand GlobalSearchCommand { get { return btnSearch; } }
         
         public bool IsActiveOnly
         {
@@ -113,6 +140,12 @@ namespace projUI.ViewModels
                 OnQuickSearchChanged(this, new DependencyPropertyChangedEventArgs());
             }
             get { return isActive; }
+        }
+
+        public string GlobalSearch
+        {
+            get { return globalSearchRequest; }
+            set { globalSearchRequest = value; }
         }
 
         public string quickSearch
