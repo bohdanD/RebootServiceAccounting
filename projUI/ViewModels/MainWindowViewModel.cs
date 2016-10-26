@@ -57,7 +57,7 @@ namespace projUI.ViewModels
             user = new User();
             entBtnCommand = new EnterButtonCommand(Login);
             regBtnCommand = new RegistrationButtonCommand(RunRegistrationWindow);
-            GlobalData.UsersList = user.GetUsers();
+            
         }
         /// <summary>
         /// 

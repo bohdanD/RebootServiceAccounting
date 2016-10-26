@@ -6,19 +6,19 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.UserWindow"
         mc:Ignorable="d"
-        Title="UserWindow" Height="320" Width="415">
+        Title="UserWindow" Height="302" Width="592">
     <Grid>
         <Grid.DataContext>
             <ViewModels:UserWindowViewModel/>
         </Grid.DataContext>
-        <Label x:Name="lblHead" Content="{Binding lblHeader, Mode=OneWay}" HorizontalAlignment="Left" Margin="125,25,0,0" VerticalAlignment="Top" Width="148" FontStyle="Oblique" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center"/>
+        <Label x:Name="lblHead" Content="{Binding lblHeader, Mode=OneWay}" HorizontalAlignment="Left" Margin="202,24,0,0" VerticalAlignment="Top" Width="148" FontStyle="Oblique" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center"/>
         <Label x:Name="label" Content="К-сть виконаних замовелень цього місяця:" HorizontalAlignment="Left" Margin="27,76,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblDone" Content="{Binding lblDoneOrdersCount, Mode=OneWay}" HorizontalAlignment="Left" Margin="314,76,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-        <Label x:Name="label1" Content="Дохід:" HorizontalAlignment="Left" Margin="27,131,0,0" VerticalAlignment="Top" Width="73"/>
-        <Label x:Name="lblIncome" Content="{Binding lblIncome, Mode=OneWay}" HorizontalAlignment="Left" Margin="314,131,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-        <Button x:Name="btStatistic" Content="Облік" Margin="27,199,0,0" VerticalAlignment="Top" Width="90" Height="50" HorizontalAlignment="Left" Command="{Binding btnStatic, Mode=OneWay}"/>
-        <Button x:Name="btAddWin" Content="Додати" HorizontalAlignment="Left" Margin="153,199,0,0" VerticalAlignment="Top" Width="90" Height="50" Command="{Binding btnAddWin, Mode=OneWay}"/>
-        <Button x:Name="btOpenClientsWindow" Content="Замовлення" HorizontalAlignment="Left" Margin="281,199,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnClients, Mode=OneWay}"/>
+        <Label x:Name="label1" Content="Дохід:" HorizontalAlignment="Left" Margin="27,140,0,0" VerticalAlignment="Top" Width="73"/>
+        <Label x:Name="lblIncome" Content="{Binding lblIncome, Mode=OneWay}" HorizontalAlignment="Left" Margin="314,140,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="btStatistic" Content="Облік" Margin="28,197,0,0" VerticalAlignment="Top" Width="90" Height="50" HorizontalAlignment="Left" Command="{Binding btnStatic, Mode=OneWay}"/>
+        <Button x:Name="btAddWin" Content="Додати" HorizontalAlignment="Left" Margin="154,197,0,0" VerticalAlignment="Top" Width="90" Height="50" Command="{Binding btnAddWin, Mode=OneWay}"/>
+        <Button x:Name="btOpenClientsWindow" Content="Замовлення" HorizontalAlignment="Left" Margin="282,197,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnClients, Mode=OneWay}"/>
 
     </Grid>
 </Window>

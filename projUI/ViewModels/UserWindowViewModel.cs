@@ -1,23 +1,16 @@
 ﻿using projUI.Commands;
 using projUI.Constants;
 using projUI.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace projUI.ViewModels
 {
-    class UserWindowViewModel : INotifyPropertyChanged
+    class UserWindowViewModel
     {
         private Client _client;
         private StatisticButtonCommand _btStatistic;
         private AddWinButtonCommand _btAddWin;
         private OpenClientsWindowCommand _btClients;
-        public event PropertyChangedEventHandler PropertyChanged;
         public UserWindowViewModel()
         {
             _client = new Client();
@@ -82,6 +75,7 @@ namespace projUI.ViewModels
         {
             ClientsWindow win = new ClientsWindow();
             win.ShowDialog();
+            
         }
     }
 }

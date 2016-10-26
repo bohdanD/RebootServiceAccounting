@@ -49,7 +49,6 @@ namespace projUI.ViewModels
             _client = new Client();
 
             myCollectionViewSource = new CollectionViewSource();
-            GlobalData.LastClients = _client.GetLastClients(20);
             myCollectionViewSource.Source = GlobalData.LastClients;
            
            

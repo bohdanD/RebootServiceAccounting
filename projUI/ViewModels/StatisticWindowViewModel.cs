@@ -15,8 +15,10 @@ namespace projUI.ViewModels
     {
         private User _user;
         private Client _client;
+        private Spending _spending;
         private DateTime _fromDate;
         private DateTime _toDate;
+        private bool isAll = false;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -36,6 +38,7 @@ namespace projUI.ViewModels
         {
             _client = new Client();
             _user = new User();
+            _spending = new Spending();
             _user.Name = GlobalData.CurrentUser.Name;
             _fromDate = DateTime.Today;
             _toDate = DateTime.Today;
@@ -45,7 +48,9 @@ namespace projUI.ViewModels
         {
             get
             {
-                return GlobalData.UsersList.Select(i => i.Name).ToList();
+                var res = GlobalData.UsersList.Select(i => i.Name).ToList();
+                res.Add("All");
+                return res;
             }
             
         }
@@ -57,8 +62,13 @@ namespace projUI.ViewModels
             }
             set
             {
-                Debug.WriteLine(value);
-                _user.Name = value;
+                if (value != "All")
+                {
+                    _user.Name = value;
+                    isAll = false;
+                }
+                else
+                    isAll = true;
                 OnPropertyChanged("lblDoneOrders");
             }
         }
@@ -99,6 +109,8 @@ namespace projUI.ViewModels
             get
             {
                 OnPropertyChanged("lblTotalCost");
+                if(isAll)
+                    return _client.GetOrdersCountForTime(_fromDate, _toDate);
                 return _client.GetOrdersCountForTime(_user, _fromDate, _toDate);
             }
         }
@@ -107,6 +119,8 @@ namespace projUI.ViewModels
             get
             {
                 OnPropertyChanged("lblIncome");
+                if(isAll)
+                    return _client.GetCostsForTime(_fromDate, _toDate);
                 return _client.GetCostsForTime(_user, _fromDate, _toDate);
             }
         }
@@ -114,7 +128,18 @@ namespace projUI.ViewModels
         {
             get
             {
+                OnPropertyChanged("lblSpendings");
+                if(isAll)
+                    return _client.GetIncomeForTime(_fromDate, _toDate);
                 return _client.GetIncomeForTime(_user, _fromDate, _toDate);
+            }
+        }
+
+        public int lblSpendings
+        {
+            get
+            {
+                return _spending.GetSpendingCostsByDate(_fromDate, _toDate);
             }
         }
         public Visibility ErrorLblVisibility
