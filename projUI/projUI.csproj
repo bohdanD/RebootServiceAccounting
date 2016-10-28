@@ -115,9 +115,11 @@
     <Compile Include="Commands\EnterButtonCommand.cs" />
     <Compile Include="Commands\GlobalSearchCommand.cs" />
     <Compile Include="Commands\OpenClientsWindowCommand.cs" />
+    <Compile Include="Commands\OpenSpendingsWindowCommand.cs" />
     <Compile Include="Commands\RegistrationButtonCommand.cs" />
     <Compile Include="Commands\RegistrationConfirmButtonCommand.cs" />
     <Compile Include="Commands\SaveChangesButtonCommand.cs" />
+    <Compile Include="Commands\SaveSpendingCommand.cs" />
     <Compile Include="Commands\StatisticButtonCommand.cs" />
     <Compile Include="Constants\GlobalData.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -144,6 +146,9 @@
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SpendingWindow.xaml.cs">
+      <DependentUpon>SpendingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatisticWindow.xaml.cs">
       <DependentUpon>StatisticWindow.xaml</DependentUpon>
     </Compile>
@@ -159,6 +164,7 @@
     </Compile>
     <Compile Include="DataModels\DataContext.cs" />
     <Compile Include="ViewModels\RegistrationWindowViewModel.cs" />
+    <Compile Include="ViewModels\SpendingWindowViewModel.cs" />
     <Compile Include="ViewModels\StatisticWindowViewModel.cs" />
     <Compile Include="ViewModels\UserWindowViewModel.cs" />
   </ItemGroup>
@@ -222,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SpendingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

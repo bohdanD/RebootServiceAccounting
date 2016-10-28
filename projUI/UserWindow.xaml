@@ -19,6 +19,7 @@
         <Button x:Name="btStatistic" Content="Облік" Margin="28,197,0,0" VerticalAlignment="Top" Width="90" Height="50" HorizontalAlignment="Left" Command="{Binding btnStatic, Mode=OneWay}"/>
         <Button x:Name="btAddWin" Content="Додати" HorizontalAlignment="Left" Margin="154,197,0,0" VerticalAlignment="Top" Width="90" Height="50" Command="{Binding btnAddWin, Mode=OneWay}"/>
         <Button x:Name="btOpenClientsWindow" Content="Замовлення" HorizontalAlignment="Left" Margin="282,197,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnClients, Mode=OneWay}"/>
+        <Button x:Name="btOpenSpendingsWindow" Content="Витрати" HorizontalAlignment="Left" Margin="408,197,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnSpendings, Mode=OneWay}"/>
 
     </Grid>
 </Window>

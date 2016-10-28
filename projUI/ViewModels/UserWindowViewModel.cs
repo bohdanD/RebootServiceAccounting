@@ -11,12 +11,14 @@ namespace projUI.ViewModels
         private StatisticButtonCommand _btStatistic;
         private AddWinButtonCommand _btAddWin;
         private OpenClientsWindowCommand _btClients;
+        private OpenSpendingsWindowCommand _btSpendings;
         public UserWindowViewModel()
         {
             _client = new Client();
             _btStatistic = new StatisticButtonCommand(StatisticWindowShow);
             _btAddWin = new AddWinButtonCommand(AddWindowShow);
             _btClients = new OpenClientsWindowCommand(ClientsWindowShow);
+            _btSpendings = new OpenSpendingsWindowCommand(() => { return true; }, SpendingWindowShow);
         }
 
         public ICommand btnStatic
@@ -38,6 +40,13 @@ namespace projUI.ViewModels
             get
             {
                 return _btClients;
+            }
+        }
+        public ICommand btnSpendings
+        {
+            get
+            {
+                return _btSpendings;
             }
         }
         public string lblHeader
@@ -75,7 +84,12 @@ namespace projUI.ViewModels
         {
             ClientsWindow win = new ClientsWindow();
             win.ShowDialog();
-            
+        }
+
+        private void SpendingWindowShow()
+        {
+            SpendingWindow win = new SpendingWindow();
+            win.ShowDialog();
         }
     }
 }

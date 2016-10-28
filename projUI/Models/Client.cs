@@ -73,7 +73,7 @@ namespace projUI.Models
         public int GetNextClientId()
         {
             using (DataContext db = new DataContext())
-                return db.Clients != null ? db.Clients.Select(i => i.Id).Max() + 1 : 10001;
+                return db.Clients.Count() != 0 ? db.Clients.Select(i => i.Id).Max() + 1 : 10001;
         }
         #endregion
 

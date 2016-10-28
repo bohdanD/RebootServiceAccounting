@@ -18,7 +18,7 @@ namespace projUI.Models
         {
             using (var db = new DataContext())
             {
-                return db.Spendings != null ? db.Spendings.Select(i => i.Id).Last() : 0;
+                return db.Spendings.Count() != 0 ? db.Spendings.Select(i => i.Id).Max() : 0;
             }
         }
 
@@ -29,6 +29,7 @@ namespace projUI.Models
             {
                 if (this!=null)
                 {
+                    this.Id = this.GetLastId() + 1;
                     db.Spendings.Add(this);
                     db.SaveChanges();
                 }
@@ -55,5 +56,6 @@ namespace projUI.Models
                 return GetSpendingsByDate(from, to, db).AsEnumerable().Select(i => i.Cost).Sum();
             }
         }
+
     }
 }
