@@ -49,6 +49,16 @@ namespace projUI.Models
             }
         }
 
+        public List<Spending> GetCurrentMonthSpendings()
+        {
+            DateTime from = DateTime.Today.AddDays(1-DateTime.Today.Day);
+            
+            using (var db = new DataContext())
+            {
+                return GetSpendingsByDate(from, DateTime.Today, db).ToList();
+            }
+        }
+
         public int GetSpendingCostsByDate(DateTime from, DateTime to)
         {
             using (var db = new DataContext())

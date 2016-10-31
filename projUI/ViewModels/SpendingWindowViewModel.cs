@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace projUI.ViewModels
 {
-    class SpendingWindowViewModel : INotifyPropertyChanged
+    class SpendingWindowViewModel : DependencyObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -24,13 +26,31 @@ namespace projUI.ViewModels
 
         private Spending _spend = new Spending();
         private SaveSpendingCommand _btSaveSpending;
+        private List<Spending> spendSource;
+        private CollectionViewSource mCollectionView;
+
+        private DateTime _fromDate;
+        private DateTime _toDate;
 
         public SpendingWindowViewModel()
         {
             _spend.Date = DateTime.Today;
             _btSaveSpending = new SaveSpendingCommand(()=> { return true; }, SaveSpending);
+
+            _fromDate = DateTime.Today.AddDays(1-DateTime.Today.Day);
+            _toDate = DateTime.Today;
+
+            mCollectionView = new CollectionViewSource();
+            spendSource = _spend.GetCurrentMonthSpendings();
+            mCollectionView.Source = spendSource;
+
+
+            Spendings = mCollectionView.View;
+            Spendings.Filter = Filter;
+
         }
 
+        #region AddSpend
         public string SpendingName
         {
             get
@@ -120,6 +140,74 @@ namespace projUI.ViewModels
             }
             MessageBox.Show("Деякі поля заповненні не правильно!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        #endregion
+
+        #region ShowSpend
+
+
+        private void GlobalSearchByDate()
+        {
+            var source = _spend.GetSpendingsByDate(_fromDate, _toDate);
+            mCollectionView.Source = source;
+            Spendings = mCollectionView.View;
+            Spendings.Filter = Filter;
+            OnPropertyChanged("Spendings");
+        }
+
+        public DateTime fromDate
+        {
+            get
+            {
+                return _fromDate;
+            }
+            set
+            {
+                _fromDate = value;
+                GlobalSearchByDate();
+            }
+        }
+
+        public DateTime toDate
+        {
+            get
+            {
+                return _toDate;
+            }
+            set
+            {
+                _toDate = value;
+                GlobalSearchByDate();
+            }
+        }
+
+
+        private bool Filter(object obj)
+        {
+            Spending current = obj as Spending;
+            return true;
+        }
+
+        public ICollectionView Spendings
+        {
+            get { return (ICollectionView)GetValue(SpendingsProperty); }
+            set { SetValue(SpendingsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Spendings.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SpendingsProperty =
+            DependencyProperty.Register("Spendings", typeof(ICollectionView), typeof(DataGrid), new PropertyMetadata(null,
+                OnFilterChanged));
+
+        private static void OnFilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            
+        }
+
+
+
+
+
+        #endregion
 
 
     }

@@ -26,8 +26,28 @@
                     <Label x:Name="lblDateError" Content="Виберіть коректну дату" HorizontalAlignment="Left" Margin="408,192,0,0" VerticalAlignment="Top" Foreground="Red" Visibility="{Binding showDateError, Mode=OneWay}"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Переглянути витрати" HorizontalAlignment="Right" Width="132">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,9">
+                    <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="0,48,0,0" ClipToBounds="True" EnableRowVirtualization="False" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Spendings}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Номер витрати" Binding="{Binding Id}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Назва витрати" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Кошти" Binding="{Binding Cost}" IsReadOnly="False"/>
+                            <DataGridTemplateColumn Header="Дата">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Date}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="label2" Content="Фільтр по даті:" HorizontalAlignment="Left" Margin="32,10,0,0" VerticalAlignment="Top" FontFamily="Script MT Bold"/>
+                    <DatePicker x:Name="fromDate" HorizontalAlignment="Left" Margin="187,10,0,0" VerticalAlignment="Top" SelectedDate="{Binding fromDate, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label x:Name="label2_Copy" Content="Від:" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" FontFamily="Script MT Bold"/>
+                    <Label x:Name="label2_Copy1" Content="До:" HorizontalAlignment="Left" Margin="322,11,0,0" VerticalAlignment="Top" FontFamily="Script MT Bold"/>
+                    <DatePicker x:Name="toDate" HorizontalAlignment="Left" Margin="357,9,0,0" VerticalAlignment="Top" SelectedDate="{Binding toDate, UpdateSourceTrigger=LostFocus}"/>
+                </Grid>
             </TabItem>
         </TabControl>
 
