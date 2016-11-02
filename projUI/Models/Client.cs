@@ -61,7 +61,7 @@ namespace projUI.Models
         public List<Client> GetClientsByIds(int[] Id)
         {
             using (DataContext db = new DataContext())
-                return db.Clients.Where(i => Id.Contains(i.Id)).AsEnumerable().ToList();
+                return db.Clients.Where(i => Id.Contains(i.Id)).ToList();
         }
         public List<Client> GetSearchedFromDB(string searchString)
         {

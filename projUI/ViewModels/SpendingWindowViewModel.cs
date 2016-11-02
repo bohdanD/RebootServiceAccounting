@@ -26,6 +26,7 @@ namespace projUI.ViewModels
 
         private Spending _spend = new Spending();
         private SaveSpendingCommand _btSaveSpending;
+        private SaveSpendingChangeCommand _btnSaveChanges;
         private List<Spending> spendSource;
         private CollectionViewSource mCollectionView;
 
@@ -35,7 +36,8 @@ namespace projUI.ViewModels
         public SpendingWindowViewModel()
         {
             _spend.Date = DateTime.Today;
-            _btSaveSpending = new SaveSpendingCommand(()=> { return true; }, SaveSpending);
+            _btSaveSpending = new SaveSpendingCommand(() => { return true; }, SaveSpending);
+            _btnSaveChanges = new SaveSpendingChangeCommand(() => { return true; }, UpdateSpendings);
 
             _fromDate = DateTime.Today.AddDays(1-DateTime.Today.Day);
             _toDate = DateTime.Today;
@@ -106,33 +108,33 @@ namespace projUI.ViewModels
         {
             get
             {
-                return isCostValid() ? Visibility.Hidden : Visibility.Visible;
+                return isCostValid(_spend) ? Visibility.Hidden : Visibility.Visible;
             }
         }
         public Visibility showDateError
         {
             get
             {
-                return isDateValid() ? Visibility.Hidden : Visibility.Visible;
+                return isDateValid(_spend) ? Visibility.Hidden : Visibility.Visible;
             }
         }
 
-        private bool isDateValid()
+        private bool isDateValid(Spending spend)
         {
-            return _spend.Date.CompareTo(DateTime.Today) <= 0;
+            return spend.Date.CompareTo(DateTime.Today) <= 0;
         }
-        private bool isNameValid()
+        private bool isNameValid(Spending spend)
         {
-            return _spend.Name != null || _spend.Name != "";
+            return spend.Name != null || spend.Name != "";
         }
-        private bool isCostValid()
+        private bool isCostValid(Spending spend)
         {
-            return _spend.Cost > 0;
+            return spend.Cost > 0;
         }
 
         private void SaveSpending()
         {
-            if (isCostValid() && isDateValid())
+            if (isCostValid(_spend) && isDateValid(_spend))
             {
                 _spend.Add();
                 MessageBox.Show("Витрату успішно додано", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -152,6 +154,51 @@ namespace projUI.ViewModels
             Spendings = mCollectionView.View;
             Spendings.Filter = Filter;
             OnPropertyChanged("Spendings");
+        }
+
+        private void UpdateSpendings()
+        {
+            var spends = Spendings.OfType<Spending>();
+            int[] Ids = spends.Select(i => i.Id).ToArray();
+            List<Spending> dbSpends = _spend.GetSpendingsByIds(Ids);
+
+            int index = 0;
+            string infoMsg = "Зміни успішно внесено до витрат(ти) під номером:";
+            bool show = false;
+            foreach (var item in spends)
+            {
+                if (!item.Equals(dbSpends[index]))
+                {
+                    show = true;
+                    string erorrMsg = $"Проблеми зі збереженням витрати під номером {item.Id}. Перевірте поля:\n";
+                    if (!isCostValid(item))
+                    {
+                        erorrMsg += "Кошти\n";
+                        MessageBox.Show(erorrMsg, "Помилка збереження", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    if (!isDateValid(item))
+                    {
+                        erorrMsg += "Дата\n Не можна вибрати майбутню дату витрати";
+                        MessageBox.Show(erorrMsg, "Помилка збереження", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    item.Update();
+                    infoMsg += $"{item.Id},";
+                }
+                index++;
+            }
+            if (show)
+            {
+                MessageBox.Show(infoMsg, "Зміни збережено", MessageBoxButton.OK, MessageBoxImage.Information);
+                Spendings.Refresh();
+            }
+        }
+
+
+        public ICommand SaveChangesButton
+        {
+            get { return _btnSaveChanges; }
         }
 
         public DateTime fromDate
@@ -195,16 +242,7 @@ namespace projUI.ViewModels
 
         // Using a DependencyProperty as the backing store for Spendings.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SpendingsProperty =
-            DependencyProperty.Register("Spendings", typeof(ICollectionView), typeof(DataGrid), new PropertyMetadata(null,
-                OnFilterChanged));
-
-        private static void OnFilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            
-        }
-
-
-
+            DependencyProperty.Register("Spendings", typeof(ICollectionView), typeof(DataGrid), new PropertyMetadata(null));
 
 
         #endregion
