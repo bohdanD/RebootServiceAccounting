@@ -53,7 +53,9 @@ namespace projUI.Models
         public bool IsNameValid()
         {
             string namePattern = @"^[a-z]{1,20}$";
-            if (this.Name != "" && this.Name != null && !GlobalData.UsersList.Any(u => u.Name.Equals(this.Name))
+            List<User> users = this.GetUsers();
+            bool exist = users == null ? true : !users.Any(u => u.Name.Equals(this.Name));
+            if (this.Name != "" && this.Name != null && exist
                 && Regex.IsMatch(this.Name, namePattern))
             {
                 return true;

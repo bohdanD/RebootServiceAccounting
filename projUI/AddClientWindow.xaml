@@ -12,7 +12,7 @@
     </Window.DataContext>
     <Grid>
         <Label x:Name="label" Content="Номер замовлення:" Margin="156,48,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
-        <Label x:Name="lblId" Content="{Binding lblId}" Margin="308,48,386,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label x:Name="lblId" Content="{Binding lblId}" Margin="294,48,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="26" Width="85"/>
         <Label x:Name="label1" Content="І'мя клієнта:" Margin="200,91,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
         <TextBox x:Name="txtName" Height="23" Margin="294,91,204,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" MaxLines="1" Text="{Binding txtName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
         <Label x:Name="label2" Content="Номер телефону:" Margin="170,138,428,0" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>

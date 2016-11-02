@@ -67,7 +67,7 @@ namespace projUI.ViewModels
             //TODO: finish login func
             if (user.IsUserExist())
             {
-                GlobalData.CurrentUser = GlobalData.UsersList.Where(i => i.Name == user.Name).First();
+                GlobalData.CurrentUser = user.GetUsers().Where(i => i.Name.Equals(user.Name)).First();
                 UserWindow win = new UserWindow();
                 win.ShowDialog();
             }

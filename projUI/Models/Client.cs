@@ -53,6 +53,8 @@ namespace projUI.Models
         {
             using (DataContext db = new DataContext())
             {
+                if (db.Clients.Count() == 0)
+                    return new List<Client>();
                 int maxId = db.Clients.Select(i => i.Id).Max();
                 return db.Clients.Where(i => (maxId - i.Id) <= clientsCount).ToList();
             }
