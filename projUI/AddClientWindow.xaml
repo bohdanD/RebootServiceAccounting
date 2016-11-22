@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.AddClientWindow"
         mc:Ignorable="d"
-        Title="AddClientWindow" Height="631.904" Width="737.983">
+        Title="AddClientWindow" Height="631.904" Width="737.983" Closing="Window_Closing">
     <Window.DataContext>
         <ViewModels:AddWindowViewModel/>
     </Window.DataContext>

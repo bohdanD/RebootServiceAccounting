@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.SpendingWindow"
         mc:Ignorable="d"
-        Title="SpendingWindow" Height="343.114" Width="700.599">
+        Title="SpendingWindow" Height="343.114" Width="700.599" Closing="Window_Closing">
     <Window.DataContext>
         <ViewModels:SpendingWindowViewModel/>
     </Window.DataContext>

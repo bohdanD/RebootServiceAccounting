@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.ClientsWindow"
         mc:Ignorable="d"
-        Title="ClientsWindow" Height="436.517" Width="875.663">
+        Title="ClientsWindow" Height="436.517" Width="875.663" Closing="Window_Closing">
     <Window.DataContext>
         <ViewModels:ClientsWindowViewModel/>
     </Window.DataContext>
@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Ім'я" Binding="{Binding Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Номер телефону" Binding="{Binding PhoneNumber}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Модель" Binding="{Binding Model}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Проблема" Binding="{Binding Problem, Mode=TwoWay}" MaxWidth="150"/>
+                <DataGridTextColumn Header="Проблема" Binding="{Binding Problem, Mode=TwoWay}" Width="100" MaxWidth="500"/>
                 <DataGridTextColumn Header="Загальна вартість" Binding="{Binding Cost}"/>
                 <DataGridTextColumn Header="Дохід" Binding="{Binding Income}"/>
                 <DataGridTemplateColumn Header="Дата прийому" IsReadOnly="True">

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.StatisticWindow"
         mc:Ignorable="d"
-        Title="StatisticWindow" Height="347.211" Width="433.146">
+        Title="StatisticWindow" Height="347.211" Width="433.146" Closing="Window_Closing">
     <Window.DataContext>
         <ViewModels:StatisticWindowViewModel/>
     </Window.DataContext>

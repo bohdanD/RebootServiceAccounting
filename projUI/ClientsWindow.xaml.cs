@@ -24,7 +24,10 @@ namespace projUI
             InitializeComponent();
         }
 
-       
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            UserWindow win = new UserWindow();
+            win.Show();
+        }
     }
 }

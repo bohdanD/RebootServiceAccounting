@@ -20,6 +20,9 @@
         <Button x:Name="btAddWin" Content="Додати" HorizontalAlignment="Left" Margin="154,197,0,0" VerticalAlignment="Top" Width="90" Height="50" Command="{Binding btnAddWin, Mode=OneWay}"/>
         <Button x:Name="btOpenClientsWindow" Content="Замовлення" HorizontalAlignment="Left" Margin="282,197,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnClients, Mode=OneWay}"/>
         <Button x:Name="btOpenSpendingsWindow" Content="Витрати" HorizontalAlignment="Left" Margin="408,197,0,0" VerticalAlignment="Top" Width="86" Height="50" Command="{Binding btnSpendings, Mode=OneWay}"/>
+        <Button x:Name="button" Content="Вийти" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Width="37" Height="25" Click="button_Click"/>
+        <Button x:Name="button1" Content="Backup" HorizontalAlignment="Left" Margin="519,197,0,0" VerticalAlignment="Top" Width="55" Click="button1_Click"/>
+        <Button x:Name="button2" Content="Restore" HorizontalAlignment="Left" Margin="519,232,0,0" VerticalAlignment="Top" Width="55" Click="button2_Click"/>
 
     </Grid>
 </Window>

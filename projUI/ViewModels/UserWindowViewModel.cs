@@ -1,6 +1,7 @@
 ﻿using projUI.Commands;
 using projUI.Constants;
 using projUI.Models;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace projUI.ViewModels
@@ -70,26 +71,45 @@ namespace projUI.ViewModels
                 return _client.GetIncome(GlobalData.CurrentUser);
             }
         }
+        private void CloseThisWin()
+        {
+            foreach (var w in App.Current.Windows)
+            {
+                try
+                {
+                    UserWindow t = w as UserWindow;
+                    t.Close();
+                }
+                catch
+                {
+                  
+                }
+            }
+        }
         private void StatisticWindowShow()
         {
             StatisticWindow win = new StatisticWindow();
-            win.ShowDialog();
+            win.Show();
+            CloseThisWin();
         }
         private void AddWindowShow()
         {
             AddClientWindow win = new AddClientWindow();
-            win.ShowDialog();
+            win.Show();
+            CloseThisWin();
         }
         private void ClientsWindowShow()
         {
             ClientsWindow win = new ClientsWindow();
-            win.ShowDialog();
+            win.Show();
+            CloseThisWin();
         }
 
         private void SpendingWindowShow()
         {
             SpendingWindow win = new SpendingWindow();
-            win.ShowDialog();
+            win.Show();
+            CloseThisWin();
         }
     }
 }

@@ -57,7 +57,6 @@ namespace projUI.ViewModels
             user = new User();
             entBtnCommand = new EnterButtonCommand(Login);
             regBtnCommand = new RegistrationButtonCommand(RunRegistrationWindow);
-            
         }
         /// <summary>
         /// 
@@ -69,7 +68,8 @@ namespace projUI.ViewModels
             {
                 GlobalData.CurrentUser = user.GetUsers().Where(i => i.Name.Equals(user.Name)).First();
                 UserWindow win = new UserWindow();
-                win.ShowDialog();
+                win.Show();
+                App.Current.MainWindow.Close();
             }
             else
             {

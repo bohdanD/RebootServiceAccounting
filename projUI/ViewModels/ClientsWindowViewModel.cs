@@ -36,11 +36,13 @@ namespace projUI.ViewModels
             //-----
 
             btnSearch = new GlobalSearchCommand(() => { return true; }, GlobalSearching);
+            _client = new Client();
 
+            GlobalData.LastClients = _client.GetLastClients(10);
 
             globalSearchRequest = "";
             isActive = false;
-            _client = new Client();
+           
 
             myCollectionViewSource = new CollectionViewSource();
             myCollectionViewSource.Source = GlobalData.LastClients;
