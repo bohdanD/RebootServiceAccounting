@@ -219,7 +219,11 @@ namespace projUI.ViewModels
             {
                 int val;
                 if (int.TryParse(value, out val))
+                {
                     _client.Income = val;
+                    _client.IsDone = true;
+                    _client.GivingDate = DateTime.Today;
+                }
                 else
                     _client.Income = null;
                 OnPropertyChanged("incomeErorrMsg");

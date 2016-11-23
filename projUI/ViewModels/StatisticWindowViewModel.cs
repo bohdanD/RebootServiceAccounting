@@ -87,6 +87,7 @@ namespace projUI.ViewModels
                 _fromDate = value;
                 OnPropertyChanged("lblDoneOrders");
                 OnPropertyChanged("ErrorLblVisibility");
+                OnPropertyChanged("lblBalans");
             }
         }
         public DateTime toDate
@@ -101,6 +102,7 @@ namespace projUI.ViewModels
                 _toDate = value;
                 OnPropertyChanged("lblDoneOrders");
                 OnPropertyChanged("ErrorLblVisibility");
+                OnPropertyChanged("lblBalans");
             }
         }
 
@@ -140,6 +142,14 @@ namespace projUI.ViewModels
             get
             {
                 return _spending.GetSpendingCostsByDate(_fromDate, _toDate);
+            }
+        }
+
+        public int lblBalans
+        {
+            get
+            {
+                return lblIncome - lblSpendings;
             }
         }
         public Visibility ErrorLblVisibility

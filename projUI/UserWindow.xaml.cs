@@ -54,7 +54,7 @@ namespace projUI
                 saveDb.ShowDialog();
                 using (DataContext db = new DataContext())
                 {
-                    string backupQuery = @"BACKUP DATABASE ""{0}"" TO DISK = N'{1}'";
+                    string backupQuery = @"BACKUP DATABASE ""{0}"" TO DISK = N'{1}' WITH INIT";
                     backupQuery = string.Format(backupQuery,@"projUI.DataModels.DataContext", saveDb.FileName);
                     db.Database.SqlQuery<object>(backupQuery).ToList().FirstOrDefault();
                 }

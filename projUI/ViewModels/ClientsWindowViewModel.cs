@@ -112,16 +112,23 @@ namespace projUI.ViewModels
 
         public bool Filter(object obj)
         {
-            bool result = true;
-            var i = obj as Client;
-            string searchString = quickSearch;
-            if (searchString != null && searchString != "")
-                result = i.Id.ToString().Contains(searchString)
-                || i.Name.ToLower().Contains(searchString.ToLower())
-                || i.PhoneNumber.Contains(searchString)
-                || i.Model.ToLower().Contains(searchString)
-                || i.MasterName.Contains(searchString.ToLower());
-            return isActive ? result && isActive != i.IsDone : result;
+            try
+            {
+                bool result = true;
+                var i = obj as Client;
+                string searchString = quickSearch;
+                if (!string.IsNullOrEmpty(searchString))
+                    result = i.Id.ToString().Contains(searchString)
+                    || i.Name.ToLower().Contains(searchString.ToLower())
+                    || i.PhoneNumber.Contains(searchString)
+                    || i.Model.ToLower().Contains(searchString)
+                    || i.MasterName.Contains(searchString.ToLower());
+                return isActive ? result && isActive != i.IsDone : result;
+            }
+            catch 
+            {
+                return false;
+            }
         }
 
         public ICommand SaveChangesCommand { get { return btnSave; } }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:projUI"
         xmlns:ViewModels="clr-namespace:projUI.ViewModels" x:Class="projUI.StatisticWindow"
         mc:Ignorable="d"
-        Title="StatisticWindow" Height="347.211" Width="433.146" Closing="Window_Closing">
+        Title="StatisticWindow" Height="368.211" Width="433.146" Closing="Window_Closing">
     <Window.DataContext>
         <ViewModels:StatisticWindowViewModel/>
     </Window.DataContext>
@@ -26,6 +26,8 @@
         <Label x:Name="lblInValid" Content="Вибрані значення дати не є коректними" HorizontalAlignment="Left" Margin="104,110,0,0" VerticalAlignment="Top" Height="26" Foreground="#FFF00E0E" Visibility="{Binding ErrorLblVisibility, Mode=OneWay}"/>
         <Label x:Name="label5_Copy" Content="Загальні витрати:" HorizontalAlignment="Left" Margin="76,265,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblSpendings" Content="{Binding lblSpendings, Mode=OneWay}" HorizontalAlignment="Left" Margin="284,265,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label5_Copy1" Content="Баланс:" HorizontalAlignment="Left" Margin="73,301,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblBalans" Content="{Binding lblBalans, Mode=OneWay}" HorizontalAlignment="Left" Margin="284,301,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
